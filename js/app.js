@@ -1,5 +1,5 @@
 window.addEventListener('load', function() {
-	/* Vr.1 */
+	/* V1 */
 	var btn = document.querySelector('.btn-tweet');
 	var textAreaPress= document.querySelector('.text-task');
 
@@ -8,6 +8,7 @@ window.addEventListener('load', function() {
 	textAreaPress.addEventListener('keyup', validar);
 	validar();
 	textAreaPress.addEventListener('keyup', countString);
+	textAreaPress.addEventListener('keydown', textareaAutosize);
 
 	/* función twittear - Obteniendo el texto del textArea */
 	function twittear(event){
@@ -39,9 +40,10 @@ window.addEventListener('load', function() {
 	  var quantity = 140 - (document.querySelector('.text-task').value.length);
 	  document.querySelector('.count').textContent = quantity;
 
+	  /*V3 - Cambiando color*/
 		if(quantity > 140) { 
 	 		validar();
-	 		document.querySelector('.count') = '-';
+	 		document.querySelector('.count') = '-';	 		
 	 	} else {
 			if(quantity > 130) {
 	  		document.querySelector('.count').style.color = 'orange';
@@ -52,8 +54,13 @@ window.addEventListener('load', function() {
 		 	}
 	 	}
 	}
-	
 
-	/*Vr 3 - Cambiando color*/
-
+	/* V4 - Crece textarea */
+	function textareaAutosize() {
+	  var writeBox = this;
+	  setTimeout(function() {
+	    writeBox.style.cssText = 'height: auto; padding: 0';
+	    writeBox.style.cssText = 'height:' + writeBox.scrollHeight + 'px';
+	  },0);
+	}
 })
