@@ -2,18 +2,15 @@ window.addEventListener('load', function() {
 	/* V1 */
 	var btn = document.querySelector('.btn-tweet');
 	var textAreaPress= document.querySelector('.text-task');
+	var total = document.querySelector('.count');
+	var MAXC = 140;
 
-	/* Eventos */
-	btn.addEventListener('click', twittear);
-	textAreaPress.addEventListener('keyup', validar);
-	validar();
-	textAreaPress.addEventListener('keyup', countString);
-	textAreaPress.addEventListener('keydown', textareaAutosize);
-
-	/* función twittear - Obteniendo el texto del textArea */
-	function twittear(event){
+	/* Function expression */ 
+	/* Función twittear - Obteniendo el texto del textArea */
+	var twittear = function(event){
 	  event.preventDefault();
-	  var textArea = document.querySelector('.text-task').value;
+		var textArea = textAreaPress.value;
+		/* Agrega el texto al HTML */ 
 	  var textPublished = document.createElement('p');
 	  textPublished.textContent = textArea;
 
@@ -22,45 +19,58 @@ window.addEventListener('load', function() {
 	  document.querySelector('.panel-two').appendChild(containerText);
 	  document.querySelector('.tweets-published').appendChild(textPublished);
 
-	  document.querySelector('.text-task').value = '';
+		/* Reseteo de textarea a estado inicial */ 
+		textAreaPress.focus();
+		textAreaPress.value = '';
+		textAreaPress.style.height = '';
 	  countString();
 	}
 
-	/* Validadndo boton */
-	function validar(){
-	  if(document.querySelector('.text-task').value === ''){
+	/* V2 - Validadndo boton */
+	var validateTweets = function(){
+	  if(textAreaPress.value === '' || textAreaPress.value.length > MAXC || textAreaPress.value == false){
 	    btn.disabled = true;
 	  } else {
 	    btn.disabled = false;
 	  }
 	}
 
-	/* Contando caracteres */
-	function countString(){
-	  var quantity = 140 - (document.querySelector('.text-task').value.length);
-	  document.querySelector('.count').textContent = quantity;
+	/* V2 y V3 - Contando caracteres */
+	var countString = function(){
+		var quantityCount = textAreaPress.value.length;
+	  var quantity = MAXC - quantityCount;
+		total.textContent = quantity;
 
 	  /*V3 - Cambiando color*/
-		if(quantity > 140) { 
-	 		validar();
-	 		document.querySelector('.count') = '-';	 		
-	 	} else {
-			if(quantity > 130) {
-	  		document.querySelector('.count').style.color = 'orange';
-		 	}else {
-		 		if(quantity > 120) { 
-		 			document.querySelector('.count').style.color = 'blue';																				
-		 		}
-		 	}
-	 	}
+	 	switch (true) {
+			case (quantityCount > MAXC):
+				validateTweets();
+				total.style.color = 'red';
+				break;
+			case (quantityCount > 130):
+				total.style.color = 'orange';
+				break;
+			case (quantityCount > 120):
+				total.style.color = 'blue';
+				break;
+			default:
+				total.style.color = 'black';
+		}
 	}
 
 	/* V4 - Crece textarea */
-	function textareaAutosize() {
+	var textareaAutosize = function() {
 	  var writeBox = this;
 	  setTimeout(function() {
-	    writeBox.style.cssText = 'height: auto; padding: 0';
+			writeBox.style.cssText = 'height: auto; padding: 0';
 	    writeBox.style.cssText = 'height:' + writeBox.scrollHeight + 'px';
 	  },0);
 	}
+
+	/* Eventos */
+	btn.addEventListener('click', twittear);
+	textAreaPress.addEventListener('keyup', validateTweets);
+	validateTweets();
+	textAreaPress.addEventListener('keydown', countString);
+	textAreaPress.addEventListener('keydown', textareaAutosize);
 })
