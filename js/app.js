@@ -3,33 +3,28 @@ window.addEventListener('load', function() {
 	var btn = document.querySelector('.btn-tweet');
 	var textAreaPress= document.querySelector('.text-task');
 	var total = document.querySelector('.count');
+	var textPublished = document.querySelector('.tweets-published');
+	// var panelThree = document.querySelector('.panel-three');
 	var MAXC = 140;
-
+	
 	/* Function expression */ 
 	/* Función twittear - Obteniendo el texto del textArea */
 	var twittear = function(event){
-	  event.preventDefault();
+		event.preventDefault();
 		var textArea = textAreaPress.value;
 		/* Agrega el texto al HTML */ 
-	  var textPublished = document.createElement('p');
-	  textPublished.textContent = textArea;
-
-	  var containerText = document.createElement('div');
-	  containerText.setAttribute('class', 'tweets-published');
-	  document.querySelector('.panel-two').appendChild(containerText);
-	  document.querySelector('.tweets-published').appendChild(textPublished);
+	  var paragraph = document.createElement('p');
+		/* V6 - Hora de publicado el tweet con librería moment */ 
+		var hour = moment().format('HH:mm');
+		paragraph.textContent = textArea + ' ' + hour;
+		textPublished.appendChild(paragraph);
 
 		/* Reseteo de textarea a estado inicial */ 
 		textAreaPress.focus();
-		clearTweets();
-		countString();
-		showTime();
-	}
-
-	var clearTweets = function() {
 		textAreaPress.value = '';
 		textAreaPress.style.height = '';
-	};
+	}
+
 
 	/* V2 - Validadndo boton */
 	var validateTweets = function(){
@@ -72,13 +67,6 @@ window.addEventListener('load', function() {
 	  },0);
 	}
 
-	/* V6 - Hora de publicado el tweet con librería moment */ 
-	var showTime = function() {
-		var hour = moment().format('HH:mm');
-		var containerHour = document.createElement('span');
-		containerHour.innerHTML = hour;
-	};
-
 
 	/* Eventos */
 	btn.addEventListener('click', twittear);
@@ -86,4 +74,6 @@ window.addEventListener('load', function() {
 	// validateTweets();
 	textAreaPress.addEventListener('keydown', countString);
 	textAreaPress.addEventListener('keydown', textareaAutosize);
+
+	textAreaPress.addEventListener('click', showTime);
 })

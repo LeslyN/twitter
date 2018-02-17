@@ -110,15 +110,18 @@ hr {
   padding: 20px 0px 0px 0px;
 }
 
-.tweets-published {
-	background-color: #fff;
+.panel-three {
+  margin-top: 300px;
+  padding: 1em;
 }
 
-p.tweets-published, .tweets-published {
+.tweets-published {
+  margin-top: 1em;
 	position: absolute;
-	margin-top: 150px;
-	float: left;
-	min-width: 100%;
-  padding: 15px;
-  word-wrap: break-word;
+}
+
+p {
+  border: 1px solid #fff;
+  margin: 1em;
+  position: relative;
 }
