@@ -119,5 +119,6 @@ p.tweets-published, .tweets-published {
 	margin-top: 150px;
 	float: left;
 	min-width: 100%;
-	padding: 15px;
+  padding: 15px;
+  word-wrap: break-word;
 }

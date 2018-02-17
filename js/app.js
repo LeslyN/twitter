@@ -21,10 +21,15 @@ window.addEventListener('load', function() {
 
 		/* Reseteo de textarea a estado inicial */ 
 		textAreaPress.focus();
+		clearTweets();
+		countString();
+		showTime();
+	}
+
+	var clearTweets = function() {
 		textAreaPress.value = '';
 		textAreaPress.style.height = '';
-	  countString();
-	}
+	};
 
 	/* V2 - Validadndo boton */
 	var validateTweets = function(){
@@ -67,10 +72,18 @@ window.addEventListener('load', function() {
 	  },0);
 	}
 
+	/* V6 - Hora de publicado el tweet con librería moment */ 
+	var showTime = function() {
+		var hour = moment().format('HH:mm');
+		var containerHour = document.createElement('span');
+		containerHour.innerHTML = hour;
+	};
+
+
 	/* Eventos */
 	btn.addEventListener('click', twittear);
 	textAreaPress.addEventListener('keyup', validateTweets);
-	validateTweets();
+	// validateTweets();
 	textAreaPress.addEventListener('keydown', countString);
 	textAreaPress.addEventListener('keydown', textareaAutosize);
 })
